@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option csharp_namespace = "CaloriesCalculator.Protos";
+
+enum ActivityLevel {
+	NONE = 0;
+	VERYLOW = 1;
+	LOW = 2;
+	AVERAGE = 3;
+	HIGH = 4;
+	VERYHIGH = 5;
+}

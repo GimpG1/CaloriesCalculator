@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option csharp_namespace = "CaloriesCalculator.Protos";
+
+import "activity.proto";
+import "sex.proto";
+import "status.proto";
+
+service Calculator {
+  rpc CalculateBasic (CalculateBasicRequest) returns (CalculateBasicReply);
+  rpc CalculateTotal (CalculateBasicRequest) returns (CalculateTotalReply);
+}
+
+// The request message for basic calculations.
+message CalculateBasicRequest {
+  float weight = 1;
+  float width = 2;
+  uint32 age = 3;
+  SexOrientation orientation = 4;
+  ActivityLevel activity = 5;
+  ReadingStatus state = 6;
+}
+
+// The response message containing the results of calculations.
+message CalculateBasicReply {
+  float basic = 1;
+  string message = 2;
+  ReadingStatus state = 6;
+}
+// The response message containing the results of calculations.
+message CalculateTotalReply {
+  float total = 1;
+  string message = 2;
+  ReadingStatus state = 6;
+}
