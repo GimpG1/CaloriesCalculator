@@ -7,7 +7,6 @@ import "sex.proto";
 import "status.proto";
 
 service Calculator {
-  rpc CalculateBasic (CalculateBasicRequest) returns (CalculateBasicReply);
   rpc CalculateTotal (CalculateBasicRequest) returns (CalculateTotalReply);
 }
 
@@ -22,14 +21,9 @@ message CalculateBasicRequest {
 }
 
 // The response message containing the results of calculations.
-message CalculateBasicReply {
-  float basic = 1;
-  string message = 2;
-  ReadingStatus state = 6;
-}
-// The response message containing the results of calculations.
 message CalculateTotalReply {
-  float total = 1;
-  string message = 2;
+  int32 basic = 1;
+  int32 total = 2;
+  string message = 3;
   ReadingStatus state = 6;
 }

@@ -19,48 +19,30 @@ namespace CaloriesCalculator.Services
             _activity = activity ?? throw new ArgumentNullException(nameof(activity));
         }
 
-        public override async Task<CalculateBasicReply> CalculateBasic(CalculateBasicRequest request, ServerCallContext context)
-        {
-            var calculationDataBase = CreateBaseCalculationFor(request.Orientation, _activity);
-            if (calculationDataBase is EmptyCalculations)
-            {
-                return await Task.FromResult(new CalculateBasicReply()
-                {
-                    Basic = 0.0f,
-                    Message = "Couldn't make proper calculations according to requested type",
-                    State = ReadingStatus.Failure
-                });
-            }
-
-            var calculator = new Calculate(calculationDataBase);
-            return await Task.FromResult(new CalculateBasicReply()
-            {
-                Basic = calculator.CalculatePpm(request),
-                Message = "Calculated for request",
-                State = ReadingStatus.Success
-            });
-        }
-
         public override async Task<CalculateTotalReply> CalculateTotal(CalculateBasicRequest request, ServerCallContext context)
         {
             var calculationDataBase = CreateBaseCalculationFor(request.Orientation, _activity);
+            //TODO: add the validations for request in here
             if (calculationDataBase is EmptyCalculations)
             {
                 return await Task.FromResult(new CalculateTotalReply()
                 {
-                    Total = 0.0f,
+                    Basic = 0,
+                    Total = 0,
                     Message = "Couldn't make proper calculations according to requested type",
                     State = ReadingStatus.Failure
                 });
             }
 
             var calculator = new Calculate(calculationDataBase);
-            calculator.CalculatePpm(request);
-            calculator.CalculateCpm(request.Activity, request.Orientation, out var total);
+            calculator.CalculateBasicMetabolism(request)
+                      .CalculateTotalMetabolism(request.Activity, request.Orientation);
+
             return await Task.FromResult(new CalculateTotalReply()
             {
-                Total = total,
-                Message = "Calculated for request",
+                Basic = calculator.BasicMetabolism,
+                Total = calculator.TotalMetabolism,
+                Message = string.Format("Calculated for: {0}, with activity level at {1}", request.Orientation, request.Activity),
                 State = ReadingStatus.Success
             });
         }
