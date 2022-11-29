@@ -19,8 +19,7 @@ namespace CaloriesCalculator.Structure.Calculations
         /// <summary>
         /// Method to calculate basic metabolism using the Harris Benedicta pattern
         /// </summary>
-        //TODO: rename func name
-        public virtual float CalculatePPM(float weight, float height, uint age)
+        public virtual float CalculateBasicMetabolism(float weight, float height, uint age)
         {
             _cpm = Base + WeightMultiplier * weight + HeightMultiplier * height - AgeMultiplier * age;
             return (float)Math.Round(_cpm, 2);
@@ -28,8 +27,7 @@ namespace CaloriesCalculator.Structure.Calculations
         /// <summary>
         /// Method to calculate total metabolism
         /// </summary>
-        //TODO: rename func name
-        public virtual bool TryCalculateCPM(Protos.ActivityLevel activityLevel, Protos.SexOrientation sex, out float cpm)
+        public virtual bool TryCalculateTotalMetabolism(Protos.ActivityLevel activityLevel, Protos.SexOrientation sex, out float cpm)
         {
             if (IsCalculated)
             {

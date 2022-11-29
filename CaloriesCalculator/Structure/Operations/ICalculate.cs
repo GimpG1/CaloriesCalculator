@@ -4,7 +4,9 @@ namespace CaloriesCalculator.Structure.Operations
 {
     public interface ICalculate
     {
-        float CalculatePpm(CalculateBasicRequest request);
-        bool CalculateCpm(Protos.ActivityLevel activityLevel, Protos.SexOrientation sex, out float cpm);
+        public int BasicMetabolism { get; }
+        public int TotalMetabolism { get; }
+        ICalculate CalculateBasicMetabolism(CalculateBasicRequest request);
+        ICalculate CalculateTotalMetabolism(Protos.ActivityLevel activityLevel, Protos.SexOrientation sex);
     }
 }

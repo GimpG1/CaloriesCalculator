@@ -17,7 +17,7 @@ namespace CaloriesCalculator.Tests
             var calculationData = helper.CreateBaseCalculationFor(orientation, _mActivity.Object);  
 
             Assert.NotNull(calculationData);
-            Assert.Equal(ppm, calculationData.CalculatePPM(weight, height, age));
+            Assert.Equal(ppm, calculationData.CalculateBasicMetabolism(weight, height, age));
         }
 
         [Theory]
@@ -33,9 +33,9 @@ namespace CaloriesCalculator.Tests
             var calculationData = helper.CreateBaseCalculationFor(orientation, _mActivity.Object);  
 
             Assert.NotNull(calculationData);
-            Assert.Equal(ppm, calculationData.CalculatePPM(weight, height, age));
+            Assert.Equal(ppm, calculationData.CalculateBasicMetabolism(weight, height, age));
 
-            Assert.True(calculationData.TryCalculateCPM(activity, orientation, out float cpmResult));
+            Assert.True(calculationData.TryCalculateTotalMetabolism(activity, orientation, out float cpmResult));
             Assert.Equal(cpm, cpmResult);
         }
     }

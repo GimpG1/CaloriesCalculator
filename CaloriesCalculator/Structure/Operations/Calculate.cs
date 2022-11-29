@@ -1,4 +1,5 @@
-﻿using CaloriesCalculator.Protos;
+﻿using System;
+using CaloriesCalculator.Protos;
 using CaloriesCalculator.Structure.Calculations;
 
 namespace CaloriesCalculator.Structure.Operations
@@ -7,24 +8,31 @@ namespace CaloriesCalculator.Structure.Operations
     {
         private readonly BaseCalculationData calculationData;
 
+        private float _basic;
+        private float _total;
+        public int BasicMetabolism => (int)Math.Round(_basic);
+
+        public int TotalMetabolism => (int)Math.Round(_total);
+
         public Calculate(BaseCalculationData calculationData)
         {
             this.calculationData = calculationData;
         }
 
-        public float CalculatePpm(CalculateBasicRequest request)
+        public ICalculate CalculateBasicMetabolism(CalculateBasicRequest request)
         {
-            return this.calculationData.CalculatePPM(weight: request.Weight, height: request.Width, age: request.Age);
+            _basic = this.calculationData.CalculateBasicMetabolism(weight: request.Weight, height: request.Width, age: request.Age);
+            return this;
         }
 
-        public bool CalculateCpm(Protos.ActivityLevel activityLevel, Protos.SexOrientation sex, out float cpm)
+        public ICalculate CalculateTotalMetabolism(Protos.ActivityLevel activityLevel, SexOrientation sex)
         {
             if(!this.calculationData.IsCalculated)
             {
-                cpm = default;
-                return false;
+                _total = default;
             }
-            return this.calculationData.TryCalculateCPM(activityLevel, sex, out cpm);
+            this.calculationData.TryCalculateTotalMetabolism(activityLevel, sex, out _total);
+            return this;
         }
     }
 }
