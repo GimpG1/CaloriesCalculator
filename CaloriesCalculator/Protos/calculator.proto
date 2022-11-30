@@ -13,7 +13,7 @@ service Calculator {
 // The request message for basic calculations.
 message CalculateBasicRequest {
   float weight = 1;
-  float width = 2;
+  float height = 2;
   uint32 age = 3;
   SexOrientation orientation = 4;
   ActivityLevel activity = 5;

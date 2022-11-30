@@ -16,7 +16,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Grpc.AspNetCore" Version="2.27.0" />
+		<PackageReference Include="Calzolari.Grpc.AspNetCore.Validation" Version="3.5.0" />
+		<PackageReference Include="Grpc.AspNetCore" Version="2.39.0" />
 	</ItemGroup>
 
 </Project>

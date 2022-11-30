@@ -1,5 +1,7 @@
 ﻿using CaloriesCalculator.Services;
 using CaloriesCalculator.Structure;
+using CaloriesCalculator.Validations;
+using Calzolari.Grpc.AspNetCore.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +16,12 @@ namespace CaloriesCalculator
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IActivity, ActivityLevel>();
-            services.AddGrpc();
+
+            services.AddGrpc( options => options.EnableMessageValidation());
+            services.AddSingleton<IValidatorErrorMessageHandler>(new CalculateValidationHandler());
+            services.AddGrpcValidation();
+
+            services.AddValidator<CalculateRequestValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

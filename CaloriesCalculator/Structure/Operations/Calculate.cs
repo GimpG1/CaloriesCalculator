@@ -21,7 +21,7 @@ namespace CaloriesCalculator.Structure.Operations
 
         public ICalculate CalculateBasicMetabolism(CalculateBasicRequest request)
         {
-            _basic = this.calculationData.CalculateBasicMetabolism(weight: request.Weight, height: request.Width, age: request.Age);
+            _basic = this.calculationData.CalculateBasicMetabolism(weight: request.Weight, height: request.Height, age: request.Age);
             return this;
         }
 
